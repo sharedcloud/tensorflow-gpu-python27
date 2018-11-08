@@ -15,8 +15,8 @@ RUN \
   apt-get install -y python python-dev curl
 
 RUN curl https://bootstrap.pypa.io/get-pip.py | python
-RUN pip install tensorflow-gpu==1.10.1
+RUN pip install tensorflow-gpu==1.10.1 jupyter
 
 WORKDIR /data
 
-CMD /bin/bash && python -c "$CODE"
+CMD /bin/bash && [ ! $CODE ] && jupyter notebook --ip=0.0.0.0 --port=8000 --allow-root --NotebookApp.token='' || python -c "$CODE"
